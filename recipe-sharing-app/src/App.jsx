@@ -4,7 +4,7 @@ import RecipeDetails from './components/RecipeDetails';
 import EditRecipeForm from './components/EditRecipeForm';
 import CreateRecipeForm from './components/CreateRecipeForm'; // This handles recipe creation
 import DeleteRecipeButton from './components/DeleteRecipeButton';
-
+import AddRecipeForm from './components/AddRecipeForm';
 const App = () => {
   return (
     <Router>
@@ -26,6 +26,7 @@ const App = () => {
           <Route path="/edit/:id" element={<EditRecipeForm />} />
           <Route path="/create" element={<CreateRecipeForm />} />
           <Route path="/delete/:id" element={<DeleteRecipeButton />} />
+          <Route path='/add/:id' element={<AddRecipeForm />} />
         </Routes>
       </div>
     </Router>
