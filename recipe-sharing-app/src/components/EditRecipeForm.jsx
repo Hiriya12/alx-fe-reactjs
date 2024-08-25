@@ -9,8 +9,8 @@ const EditRecipeForm = ({ recipe }) => {
   const [ingredients, setIngredients] = useState(recipe.ingredients.join(', '));
   const [instructions, setInstructions] = useState(recipe.instructions);
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Add this line to prevent the default form submission
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Add this line to prevent the default form submission
     const updatedRecipe = {
       id: recipe.id,
       title,
