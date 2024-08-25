@@ -1,43 +1,46 @@
-import { useState } from "react";
+// EditRecipeForm.js
+import React, { useState } from 'react';
+import { useRecipeStore } from './recipeStore';
+import { useHistory } from 'react-router-dom';
 
-import { useRecipeStore } from "./recipeStore";
+const EditRecipeForm = ({ recipe }) => {
+  const [editedRecipe, setEditedRecipe] = useState({ ...recipe });
+  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
+  const history = useHistory();
 
-const EditRecipeForm = ({ recipe}) => {
-    const [title, setTitle] = useState(recipe.title);
-    const [description, setDescription] = useState(recipe.description);
-    const [ingredients, setIngredients] = useState(recipe.ingredients.join(','));
-    const [instructions, setInstructions] = useState(recipe.instructions);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedRecipe((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-    const updateRecipe = useRecipeStore((state) => state.updateRecipe);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateRecipe(editedRecipe);
+    history.push('/'); // Navigate back to the recipe list after saving changes
+  };
 
-    const  handleSubmit = (e) = > {
-        e.preventDefault();
-        const updatedRecipe = {
-            id: recipe.id,
-            title,
-            description,
-            ingredients: ingredients.split (','),
-            instructions,
-        };
-        updateRecipe(updatedRecipe);
-    };
- return (
-    <form on submit={handleSubmit}>
-        <label>
-            Title:
-        <input 
-        type="text" 
-        value ={title}
-        onChange={(e) => setTitle(e.target.value)}
-        />
-        </label>
-        < button type="Submit">Save</button>
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2>Edit Recipe</h2>
+      <label>Title:</label>
+      <input
+        type="text"
+        name="title"
+        value={editedRecipe.title}
+        onChange={handleChange}
+      />
+      <label>Description:</label>
+      <textarea
+        name="description"
+        value={editedRecipe.description}
+        onChange={handleChange}
+      />
+      <button type="submit">Save Changes</button>
     </form>
-
- );
+  );
 };
-export default EditRecipeFormComponent;
 
-
-
-
+export default EditRecipeForm;
