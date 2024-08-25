@@ -5,6 +5,8 @@ import EditRecipeForm from './components/EditRecipeForm';
 import CreateRecipeForm from './components/CreateRecipeForm'; // This handles recipe creation
 import DeleteRecipeButton from './components/DeleteRecipeButton';
 import AddRecipeForm from './components/AddRecipeForm';
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
 const App = () => {
   return (
     <Router>
@@ -19,7 +21,8 @@ const App = () => {
             </li>
           </ul>
         </nav>
-
+        <FavoritesList />
+        <RecommendationsList />
         <Routes>
           <Route path="/" element={<RecipeList />} />
           <Route path="/recipe/:id" element={<RecipeDetails />} />
