@@ -1,42 +1,44 @@
-// EditRecipeForm.js
-import React, { useState } from 'react';
 import { useRecipeStore } from './recipeStore';
-import { useHistory } from 'react-router-dom';
 
 const EditRecipeForm = ({ recipe }) => {
-  const [editedRecipe, setEditedRecipe] = useState({ ...recipe });
   const updateRecipe = useRecipeStore((state) => state.updateRecipe);
-  const history = useHistory();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedRecipe((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const [title, setTitle] = useState(recipe.title);
+  const [description, setDescription] = useState(recipe.description);
+  const [ingredients, setIngredients] = useState(recipe.ingredients.join(', '));
+  const [instructions, setInstructions] = useState(recipe.instructions);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateRecipe(editedRecipe);
-    history.push('/'); // Navigate back to the recipe list after saving changes
+    const updatedRecipe = {
+      id: recipe.id,
+      title,
+      description,
+      ingredients: ingredients.split(',').map((item) => item.trim()),
+      instructions,
+    };
+    updateRecipe(updatedRecipe);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Edit Recipe</h2>
-      <label>Title:</label>
       <input
         type="text"
-        name="title"
-        value={editedRecipe.title}
-        onChange={handleChange}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
       />
-      <label>Description:</label>
       <textarea
-        name="description"
-        value={editedRecipe.description}
-        onChange={handleChange}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <input
+        type="text"
+        value={ingredients}
+        onChange={(e) => setIngredients(e.target.value)}
+      />
+      <textarea
+        value={instructions}
+        onChange={(e) => setInstructions(e.target.value)}
       />
       <button type="submit">Save Changes</button>
     </form>
