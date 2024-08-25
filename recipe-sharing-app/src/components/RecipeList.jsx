@@ -1,18 +1,17 @@
-import { useRecipeStore } from  './recipeStore';
+import React from 'react';
+import { useRecipeStore } from './recipeStore';
+import RecipeCard from './RecipeCard';
 
-  const RecipeList = () => {
-    const recipes = useRecipeStore(state => state.recipes);
+const RecipeList = () => {
+  const filteredRecipes = useRecipeStore(state => state.filteredRecipes);
 
-    return (
-      <div>
-        {recipes.map(recipe => (
-          <div key={recipe.id}>
-            <h3>{recipe.title}</h3>
-            <p>{recipe.description}</p>
-          </div>
-        ))}
-      </div>
-    );
-  };
-  export default RecipeList;
+  return (
+    <div>
+      {filteredRecipes.map(recipe => (
+        <RecipeCard key={recipe.id} recipe={recipe} />
+      ))}
+    </div>
+  );
+};
 
+export default RecipeList;
