@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRecipeStore } from './recipeStore';
 
 const EditRecipeForm = ({ recipe }) => {
@@ -9,7 +10,7 @@ const EditRecipeForm = ({ recipe }) => {
   const [instructions, setInstructions] = useState(recipe.instructions);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Add this line to prevent the default form submission
     const updatedRecipe = {
       id: recipe.id,
       title,
