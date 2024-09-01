@@ -28,6 +28,7 @@ const RegistrationForm = () => {
             console.log('Form submitted:', formData);
             // Simulate API call here
             setFormData({ username: '', email: '', password: '' });
+            setErrors({}); // Clear errors on successful submission
         } else {
             setErrors(validationErrors);
         }
@@ -36,34 +37,37 @@ const RegistrationForm = () => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label>Username</label>
+                <label htmlFor="username">Username</label>
                 <input
                     type="text"
                     name="username"
+                    id="username"
                     value={formData.username}
                     onChange={handleChange}
                 />
-                {errors.username && <p>{errors.username}</p>}
+                {errors.username && <p className="error">{errors.username}</p>}
             </div>
             <div>
-                <label>Email</label>
+                <label htmlFor="email">Email</label>
                 <input
                     type="email"
                     name="email"
+                    id="email"
                     value={formData.email}
                     onChange={handleChange}
                 />
-                {errors.email && <p>{errors.email}</p>}
+                {errors.email && <p className="error">{errors.email}</p>}
             </div>
             <div>
-                <label>Password</label>
+                <label htmlFor="password">Password</label>
                 <input
                     type="password"
                     name="password"
+                    id="password"
                     value={formData.password}
                     onChange={handleChange}
                 />
-                {errors.password && <p>{errors.password}</p>}
+                {errors.password && <p className="error">{errors.password}</p>}
             </div>
             <button type="submit">Register</button>
         </form>

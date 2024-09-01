@@ -9,9 +9,9 @@ const FormikForm = () => {
         password: ''
     };
 
-    const validationSchema = Yup.object().shape({
+    const validationSchema = Yup.object({
         username: Yup.string().required('Username is required'),
-        email: Yup.string().email('Invalid email').required('Email is required'),
+        email: Yup.string().email('Invalid email format').required('Email is required'),
         password: Yup.string().required('Password is required')
     });
 
@@ -27,24 +27,24 @@ const FormikForm = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {() => (
+            {({ isSubmitting }) => (
                 <Form>
                     <div>
-                        <label>Username</label>
-                        <Field type="text" name="username" />
+                        <label htmlFor="username">Username</label>
+                        <Field type="text" name="username" id="username" />
                         <ErrorMessage name="username" component="p" />
                     </div>
                     <div>
-                        <label>Email</label>
-                        <Field type="email" name="email" />
+                        <label htmlFor="email">Email</label>
+                        <Field type="email" name="email" id="email" />
                         <ErrorMessage name="email" component="p" />
                     </div>
                     <div>
-                        <label>Password</label>
-                        <Field type="password" name="password" />
+                        <label htmlFor="password">Password</label>
+                        <Field type="password" name="password" id="password" />
                         <ErrorMessage name="password" component="p" />
                     </div>
-                    <button type="submit">Register</button>
+                    <button type="submit" disabled={isSubmitting}>Register</button>
                 </Form>
             )}
         </Formik>
