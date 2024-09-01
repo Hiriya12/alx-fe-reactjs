@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Profile from './components/Profile';
 import Home from './components/Home';
 import NotFound from './components/NotFound';
-import Blog from './components/Blog'; // Import Blog component
+import Blog from './components/Blog'; // Make sure to import the Blog component
+import BlogPost from './components/BlogPost'; // Import BlogPost component
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/blog/*" element={<Blog />} /> {/* Set up Blog route */}
+        <Route path="/blog" element={<Blog />} /> {/* Base Blog route */}
+        <Route path="/blog/:id" element={<BlogPost />} /> {/* Blog post dynamic route */}
         <Route
           path="/profile/*"
           element={
