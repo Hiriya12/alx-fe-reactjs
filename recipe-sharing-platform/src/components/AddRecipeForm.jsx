@@ -4,33 +4,43 @@ const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({}); // State for error messages
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError('');
-
-    // Simple validation
-    if (!title || !ingredients || !instructions) {
-      setError('All fields are required!');
-      return;
-    }
+  // Function to validate form inputs
+  const validate = () => {
+    const newErrors = {};
+    if (!title) newErrors.title = 'Recipe title is required.';
+    if (!ingredients) newErrors.ingredients = 'Ingredients are required.';
+    if (!instructions) newErrors.instructions = 'Preparation steps are required.';
 
     const ingredientsList = ingredients.split(',').map(item => item.trim());
     if (ingredientsList.length < 2) {
-      setError('Please provide at least two ingredients.');
+      newErrors.ingredients = 'Please provide at least two ingredients.';
+    }
+
+    return newErrors; // Return any validation errors
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrors({});  // Clear previous errors
+
+    const validationErrors = validate(); // Validate form inputs
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors); // Set errors if validation fails
       return;
     }
 
     const newRecipe = {
       title,
-      ingredients: ingredientsList,
+      ingredients: ingredients.split(',').map(item => item.trim()),
       instructions,
     };
 
-    console.log('New Recipe Submitted:', newRecipe);
+    console.log('New Recipe Submitted:', newRecipe); // Replace this with API call as needed
 
-    // Reset form after submission
+    // Reset form fields after submission
     setTitle('');
     setIngredients('');
     setInstructions('');
@@ -39,8 +49,8 @@ const AddRecipeForm = () => {
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Add New Recipe</h2>
-      {error && <div className="text-red-500 mb-4">{error}</div>}
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
+        {errors.title && <div className="text-red-500 mb-2">{errors.title}</div>}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Recipe Title</label>
           <input
@@ -51,6 +61,8 @@ const AddRecipeForm = () => {
             placeholder="Enter recipe title"
           />
         </div>
+
+        {errors.ingredients && <div className="text-red-500 mb-2">{errors.ingredients}</div>}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Ingredients (comma-separated)</label>
           <textarea
@@ -61,6 +73,8 @@ const AddRecipeForm = () => {
             rows="3"
           />
         </div>
+
+        {errors.instructions && <div className="text-red-500 mb-2">{errors.instructions}</div>}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Preparation Steps</label>
           <textarea
@@ -71,6 +85,7 @@ const AddRecipeForm = () => {
             rows="5"
           />
         </div>
+
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
