@@ -12,13 +12,18 @@ const Search = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setUserData(null); 
+    setUserData(null); // Reset user data on new search
 
     try {
       const data = await fetchUserData(username);
       setUserData(data);
     } catch (err) {
-      setError("Looks like we can't find the user"); 
+      // Check if the error is due to 404 (user not found)
+      if (err.response && err.response.status === 404) {
+        setError("Looks like we can't find the user"); // Specific error message
+      } else {
+        setError("An error occurred. Please try again."); // Generic error message
+      }
     } finally {
       setLoading(false);
     }
