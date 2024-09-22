@@ -1,4 +1,4 @@
-// src/components/Search.jsx
+
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
@@ -18,11 +18,11 @@ const Search = () => {
       const data = await fetchUserData(username);
       setUserData(data);
     } catch (err) {
-      // Handle 404 error specifically
+ 
       if (err.response && err.response.status === 404) {
-        setError("Looks like we can't find the user"); // Set specific error message
+        setError("Looks like we can't find the user"); 
       } else {
-        setError("An error occurred. Please try again."); // Generic error message
+        setError("An error occurred. Please try again."); 
       }
     } finally {
       setLoading(false);
