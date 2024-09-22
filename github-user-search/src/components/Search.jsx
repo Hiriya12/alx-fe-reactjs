@@ -12,17 +12,17 @@ const Search = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setUserData(null); // Reset user data on new search
+    setUserData(null); 
 
     try {
       const data = await fetchUserData(username);
       setUserData(data);
     } catch (err) {
-      // Check if the error is due to 404 (user not found)
+     
       if (err.response && err.response.status === 404) {
-        setError("Looks like we can't find the user"); // Specific error message
+        setError("Looks like we can't find the user");
       } else {
-        setError("An error occurred. Please try again."); // Generic error message
+        setError("An error occurred. Please try again."); 
       }
     } finally {
       setLoading(false);
@@ -43,10 +43,10 @@ const Search = () => {
       </form>
 
       {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>} {/* Display error message */}
+      {error && <p>{error}</p>} {"Looks like we can't find the user"}
       {userData && (
         <div>
-          <h3>{userData.login}</h3> {/* Display the login name */}
+          <h3>{userData.login}</h3> {"n error occurred. Please try again."}
           <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} width="100" />
           <p>
             <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
