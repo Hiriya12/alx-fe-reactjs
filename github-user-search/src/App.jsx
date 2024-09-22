@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from 'react';
-import UserSearch from './components/UserSearch';
+import UserSearch from './components/Search';
 
 const App = () => {
   return (
