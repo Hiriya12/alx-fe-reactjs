@@ -1,7 +1,8 @@
+// src/components/Search.jsx
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
-const UserSearch = () => {
+const Search = () => {
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -11,6 +12,8 @@ const UserSearch = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setUserData(null); // Reset user data on new search
+
     try {
       const data = await fetchUserData(username);
       setUserData(data);
@@ -38,8 +41,8 @@ const UserSearch = () => {
       {error && <p>{error}</p>}
       {userData && (
         <div>
-          <h3>{userData.name}</h3>
-          <img src={userData.avatar_url} alt={`${userData.name}'s avatar`} width="100" />
+          <h3>{userData.login}</h3> {/* Display the login name */}
+          <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} width="100" />
           <p>
             <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
               View Profile
@@ -51,4 +54,4 @@ const UserSearch = () => {
   );
 };
 
-export default UserSearch;
+export default Search;
