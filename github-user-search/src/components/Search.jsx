@@ -12,13 +12,13 @@ const Search = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setUserData(null); // Reset user data on new search
+    setUserData(null); 
 
     try {
       const data = await fetchUserData(username);
       setUserData(data);
     } catch (err) {
-      setError("Looks like we can't find the user");
+      setError("Looks like we can't find the user"); 
     } finally {
       setLoading(false);
     }
@@ -38,7 +38,7 @@ const Search = () => {
       </form>
 
       {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+      {error && <p>{error}</p>} {/* Display error message */}
       {userData && (
         <div>
           <h3>{userData.login}</h3> {/* Display the login name */}
